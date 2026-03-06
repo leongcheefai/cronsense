@@ -1,7 +1,7 @@
 'use client'
 
 import { Copy, Check, X } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 interface CronInputProps {
   value: string
@@ -12,6 +12,46 @@ interface CronInputProps {
 
 export function CronInput({ value, onChange, isValid, hasInput }: CronInputProps) {
   const [copied, setCopied] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value
+    let cursor = e.target.selectionStart ?? val.length
+
+    // Auto-space on single character insertion (not paste/delete)
+    if (val.length === value.length + 1 && cursor > 1) {
+      const prev = val[cursor - 2]
+      const curr = val[cursor - 1]
+
+      // Get the current field token (everything since the last space)
+      const beforeCursor = val.slice(0, cursor - 1)
+      const lastSpace = beforeCursor.lastIndexOf(' ')
+      const currentField = beforeCursor.slice(lastSpace + 1)
+
+      // Check if prev char is part of a separator that expects more digits (range/step/list)
+      const inCompound = /[,\-/]$/.test(currentField)
+
+      const needsSpace =
+        // * or digit followed by * → new field
+        (curr === '*' && (prev === '*' || /[0-9]/.test(prev))) ||
+        // * followed by digit (but not */) → new field
+        (/[0-9]/.test(curr) && prev === '*' && (cursor < 3 || val[cursor - 3] !== '/')) ||
+        // digit followed by digit: auto-space unless in a compound expression (range/step/list)
+        // allows: 1-31, */15, 5,10 to stay together
+        // splits: 12345 → 1 2 3 4 5
+        (/[0-9]/.test(curr) && /[0-9]/.test(prev) && !inCompound)
+
+      if (needsSpace) {
+        val = val.slice(0, cursor - 1) + ' ' + val.slice(cursor - 1)
+        cursor += 1
+      }
+    }
+
+    onChange(val)
+    requestAnimationFrame(() => {
+      inputRef.current?.setSelectionRange(cursor, cursor)
+    })
+  }
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(value)
@@ -27,9 +67,10 @@ export function CronInput({ value, onChange, isValid, hasInput }: CronInputProps
     <div className="flex gap-2">
       <div className="relative flex-1">
         <input
+          ref={inputRef}
           type="text"
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={handleInputChange}
           placeholder="* * * * *"
           className={`w-full bg-secondary/50 border-2 rounded-lg px-4 py-3 font-mono text-lg tracking-wider placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring transition-colors ${
             hasInput
