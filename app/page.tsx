@@ -27,7 +27,7 @@ export default function CronSensePage() {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="max-w-3xl mx-auto px-4 py-8 md:py-12">
+      <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
         {/* Header */}
         <header className="mb-8">
           <div className="flex items-center gap-3 mb-2">
@@ -46,48 +46,53 @@ export default function CronSensePage() {
           </p>
         </header>
 
-        {/* Main Content */}
-        <div className="space-y-6">
-          {/* Input Section */}
-          <section>
-            <CronInput
-              value={cronExpression}
-              onChange={setCronExpression}
-              isValid={parsed.valid}
-              hasInput={hasInput}
-            />
-            <p className="text-xs text-muted-foreground mt-2">
-              5-field (min hr day month weekday) or 6-field with seconds
-            </p>
-          </section>
-
-          {/* Explanation */}
-          <section>
-            <ExplanationBadge
-              isValid={parsed.valid}
-              explanation={parsed.explanation}
-              errorMessage={hasInput ? parsed.errorMessage : undefined}
-            />
-          </section>
-
-          {/* Field Breakdown */}
-          {hasInput && parsed.fields && (
+        {/* Main Content - Two Column Layout */}
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Left Column - Input & Results */}
+          <div className="flex-1 min-w-0 space-y-6">
+            {/* Input Section */}
             <section>
-              <FieldBreakdown fields={parsed.fields} isValid={parsed.valid} />
+              <CronInput
+                value={cronExpression}
+                onChange={setCronExpression}
+                isValid={parsed.valid}
+                hasInput={hasInput}
+              />
+              <p className="text-xs text-muted-foreground mt-2">
+                5-field (min hr day month weekday) or 6-field with seconds
+              </p>
             </section>
-          )}
 
-          {/* Next Run Times */}
-          {parsed.valid && parsed.nextRuns && (
+            {/* Explanation */}
             <section>
-              <NextRunList nextRuns={parsed.nextRuns} timezone={timezone} />
+              <ExplanationBadge
+                isValid={parsed.valid}
+                explanation={parsed.explanation}
+                errorMessage={hasInput ? parsed.errorMessage : undefined}
+              />
             </section>
-          )}
 
-          {/* Cheatsheet */}
-          <section>
-            <CheatsheetPanel onSelect={setCronExpression} />
-          </section>
+            {/* Field Breakdown */}
+            {hasInput && parsed.fields && (
+              <section>
+                <FieldBreakdown fields={parsed.fields} isValid={parsed.valid} />
+              </section>
+            )}
+
+            {/* Next Run Times */}
+            {parsed.valid && parsed.nextRuns && (
+              <section>
+                <NextRunList nextRuns={parsed.nextRuns} timezone={timezone} />
+              </section>
+            )}
+          </div>
+
+          {/* Right Column - Cheatsheet */}
+          <div className="lg:w-80 lg:shrink-0">
+            <div className="lg:sticky lg:top-8">
+              <CheatsheetPanel onSelect={setCronExpression} />
+            </div>
+          </div>
         </div>
 
         {/* Footer */}
