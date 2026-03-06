@@ -8,6 +8,7 @@ import { FieldBreakdown } from '@/components/field-breakdown'
 import { NextRunList } from '@/components/next-run-list'
 import { CheatsheetPanel } from '@/components/cheatsheet-panel'
 import { Terminal } from 'lucide-react'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 export default function CronSensePage() {
   const [cronExpression, setCronExpression] = useState('0 9 * * 1-5')
@@ -36,6 +37,9 @@ export default function CronSensePage() {
             <h1 className="text-2xl md:text-3xl font-bold text-foreground">
               CronSense
             </h1>
+            <div className="ml-auto">
+              <ThemeToggle />
+            </div>
           </div>
           <p className="text-muted-foreground">
             Paste a cron expression. Understand it instantly.

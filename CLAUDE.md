@@ -32,6 +32,6 @@ Supports both 5-field (standard) and 6-field (with seconds) cron expressions.
 
 - shadcn/ui (new-york style) with components in `components/ui/`
 - Tailwind CSS v4 with CSS variables for theming
-- Dark mode only (hardcoded `className="dark"` on `<html>`)
+- Theme toggle (system/light/dark) via `next-themes`, default is system
 - Icons: lucide-react
 - Path alias: `@/*` maps to project root
