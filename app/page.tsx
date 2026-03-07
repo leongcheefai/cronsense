@@ -109,11 +109,15 @@ export default function CronSensePage() {
         </div>
 
         {/* Footer */}
-        <footer className="mt-12 pt-6 border-t border-border text-center">
+        <footer className="mt-12 pt-6 border-t border-border flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
             Built for developers who keep forgetting what{' '}
             <code className="font-mono bg-secondary px-1.5 py-0.5 rounded">0 */6 * * 1-5</code>{' '}
             means two weeks later.
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Built by{' '}
+            <a href="https://www.praxor.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Praxor</a>
           </p>
         </footer>
       </div>
