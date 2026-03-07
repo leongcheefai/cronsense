@@ -39,12 +39,13 @@ app.post('/', async (c) => {
       }),
     })
 
+    const text = await response.text()
+
     if (!response.ok) {
-      const text = await response.text()
-      return c.json({ cron: null, error: `LLM request failed: ${response.status}` }, 500)
+      return c.json({ cron: null, error: `LLM request failed: ${response.status} ${text}` }, 500)
     }
 
-    const data = (await response.json()) as {
+    const data = JSON.parse(text) as {
       choices: { message: { content: string } }[]
     }
 
