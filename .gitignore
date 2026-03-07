@@ -10,5 +10,6 @@ node_modules/
 .DS_Store
 .vercel
 
-# Worker secrets
+# Worker secrets and cache
 workers/nl-to-cron/.dev.vars
+workers/nl-to-cron/.wrangler/

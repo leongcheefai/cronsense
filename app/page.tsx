@@ -7,6 +7,7 @@ import { ExplanationBadge } from '@/components/explanation-badge'
 import { FieldBreakdown } from '@/components/field-breakdown'
 import { NextRunList } from '@/components/next-run-list'
 import { CheatsheetPanel } from '@/components/cheatsheet-panel'
+import { NlInput } from '@/components/nl-input'
 import { Terminal } from 'lucide-react'
 import { ThemeToggle } from '@/components/theme-toggle'
 
@@ -42,7 +43,7 @@ export default function CronSensePage() {
             </div>
           </div>
           <p className="text-muted-foreground">
-            Paste a cron expression. Understand it instantly.
+            Describe your schedule or paste a cron expression.
           </p>
         </header>
 
@@ -50,7 +51,19 @@ export default function CronSensePage() {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Left Column - Input & Results */}
           <div className="flex-1 min-w-0 space-y-6">
-            {/* Input Section */}
+            {/* Natural Language Input */}
+            <section>
+              <NlInput onCronGenerated={setCronExpression} />
+            </section>
+
+            {/* Divider */}
+            <div className="flex items-center gap-3 text-xs text-muted-foreground/60">
+              <div className="flex-1 border-t border-border" />
+              <span>or enter cron directly</span>
+              <div className="flex-1 border-t border-border" />
+            </div>
+
+            {/* Cron Input */}
             <section>
               <CronInput
                 value={cronExpression}
