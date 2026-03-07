@@ -7,7 +7,7 @@ interface NlInputProps {
   onCronGenerated: (cron: string) => void
 }
 
-const WORKER_URL = process.env.NEXT_PUBLIC_NL_CRON_WORKER_URL || 'http://localhost:8787'
+const API_URL = '/api/nl-to-cron'
 
 export function NlInput({ onCronGenerated }: NlInputProps) {
   const [value, setValue] = useState('')
@@ -24,7 +24,7 @@ export function NlInput({ onCronGenerated }: NlInputProps) {
     setResult(null)
 
     try {
-      const res = await fetch(WORKER_URL, {
+      const res = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ input }),
