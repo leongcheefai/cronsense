@@ -8,7 +8,7 @@ import { FieldBreakdown } from '@/components/field-breakdown'
 import { NextRunList } from '@/components/next-run-list'
 import { CheatsheetPanel } from '@/components/cheatsheet-panel'
 import { NlInput } from '@/components/nl-input'
-import { Terminal } from 'lucide-react'
+import { Clock } from 'lucide-react'
 import { ThemeToggle } from '@/components/theme-toggle'
 
 export default function CronSensePage() {
@@ -32,8 +32,8 @@ export default function CronSensePage() {
         {/* Header */}
         <header className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-emerald-500/10 rounded-lg">
-              <Terminal className="w-6 h-6 text-emerald-500" />
+            <div className="p-2 bg-violet-500/10 rounded-lg">
+              <Clock className="w-6 h-6 text-violet-500" />
             </div>
             <h1 className="text-2xl md:text-3xl font-bold text-foreground">
               CronSense
